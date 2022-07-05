@@ -8,6 +8,8 @@
 
 import Foundation
 import WebRTC
+import WatchRTC_iOS_SDK
+import SwiftyJSON
 
 protocol WebRTCClientDelegate: AnyObject {
     func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate)
@@ -15,7 +17,22 @@ protocol WebRTCClientDelegate: AnyObject {
     func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data)
 }
 
-final class WebRTCClient: NSObject {
+final class WebRTCClient: NSObject, RtcDataProvider {
+    func getStats(callback: @escaping (RTCStatsReport) -> Void) {
+        self.peerConnection.statistics { stats in
+            var dict = [String: RTCStat]()
+            
+            for (key,value) in stats.statistics {
+                let rtcStat = RTCStat(timestamp: Int64(value.timestamp_us), properties: value.values)
+                dict[key] = rtcStat
+            }
+            
+            let rtcStatsReport = RTCStatsReport(report: dict, timestamp: Int64(stats.timestamp_us))
+
+            callback(rtcStatsReport)
+        }
+    }
+    
     
     // The `RTCPeerConnectionFactory` is in charge of creating new RTCPeerConnection instances.
     // A new RTCPeerConnection should be created every new call, but the factory is shared.
@@ -37,19 +54,21 @@ final class WebRTCClient: NSObject {
     private var remoteVideoTrack: RTCVideoTrack?
     private var localDataChannel: RTCDataChannel?
     private var remoteDataChannel: RTCDataChannel?
+    
+    private var watchRtc: WatchRTC?
 
     @available(*, unavailable)
     override init() {
         fatalError("WebRTCClient:init is unavailable")
     }
     
-    required init(iceServers: [String]) {
+     init(iceServers: [String]) {
         let config = RTCConfiguration()
         config.iceServers = [RTCIceServer(urlStrings: iceServers)]
         
         // Unified plan is more superior than planB
         config.sdpSemantics = .unifiedPlan
-        
+         
         // gatherContinually will let WebRTC to listen to any network changes and send any new candidates to the other client
         config.continualGatheringPolicy = .gatherContinually
         
@@ -64,6 +83,15 @@ final class WebRTCClient: NSObject {
         self.peerConnection = peerConnection
         
         super.init()
+         
+         let con: WatchRTCConfig = WatchRTCConfig(rtcApiKey: "staging:6d3873f0-f06e-4aea-9a25-1a959ab988cc", rtcRoomId: "noa_test135", keys: ["company":["moveo"]])
+         self.watchRtc = WatchRTC(dataProvider: self)
+         guard let watchRtc = self.watchRtc else {
+             debugPrint("error with watchRtc initialization")
+             return
+         }
+         watchRtc.setConfig(config: con)
+
         self.createMediaSenders()
         self.configureAudioSession()
         self.peerConnection.delegate = self
@@ -80,6 +108,9 @@ final class WebRTCClient: NSObject {
             
             self.peerConnection.setLocalDescription(sdp, completionHandler: { (error) in
                 completion(sdp)
+                let sessionDescroption = SessionDescription(from: sdp)
+                let sdpObj = WatchRTCSessionDescription(type: sessionDescroption.type.rawValue, sdp: sessionDescroption.sdp)
+                self.watchRtc?.sendSetLocalDescription(sdp: sdpObj)
             })
         }
     }
@@ -94,12 +125,21 @@ final class WebRTCClient: NSObject {
             
             self.peerConnection.setLocalDescription(sdp, completionHandler: { (error) in
                 completion(sdp)
+                let sessionDescroption = SessionDescription(from: sdp)
+                let sdpObj = WatchRTCSessionDescription(type: sessionDescroption.type.rawValue, sdp: sessionDescroption.sdp)
+                self.watchRtc?.sendSetLocalDescription(sdp: sdpObj)
             })
         }
     }
     
     func set(remoteSdp: RTCSessionDescription, completion: @escaping (Error?) -> ()) {
-        self.peerConnection.setRemoteDescription(remoteSdp, completionHandler: completion)
+        self.peerConnection.setRemoteDescription(remoteSdp, completionHandler: { (error) in
+            completion(error)
+            let sessionDescroption = SessionDescription(from: remoteSdp)
+            let sdpObj = WatchRTCSessionDescription(type: sessionDescroption.type.rawValue, sdp: sessionDescroption.sdp)
+            self.watchRtc?.sendSetRemoteDescription(sdp: sdpObj)
+            
+        })
     }
     
     func set(remoteCandidate: RTCIceCandidate, completion: @escaping (Error?) -> ()) {
@@ -209,6 +249,7 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         debugPrint("peerConnection new signaling state: \(stateChanged)")
+        watchRtc?.sendSignalingStateMessage(state: stateChanged.description)
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
@@ -223,13 +264,20 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
         debugPrint("peerConnection should negotiate")
     }
     
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
+    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCPeerConnectionState) {
         debugPrint("peerConnection new connection state: \(newState)")
+        watchRtc?.sendOnConnectionStateChange(state: newState.description)
+    }
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
+        debugPrint("peerConnection new ice connection state: \(newState)")
         self.delegate?.webRTCClient(self, didChangeConnectionState: newState)
+        watchRtc?.sendOnIceConnectionStateChange(state: newState.description)
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
         debugPrint("peerConnection new gathering state: \(newState)")
+        watchRtc?.sendOnIceGatheringStateChange(state: newState.description)
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
@@ -243,6 +291,19 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
     func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
         debugPrint("peerConnection did open data channel")
         self.remoteDataChannel = dataChannel
+        
+        do
+        {
+            try watchRtc?.connect()
+            watchRtc?.setUserRating(rating: 1, ratingComment: "Noas rating")
+            let params: [String: String] = [
+                "test": "data"
+            ]
+            watchRtc?.addEvent(name: "custom_test_event", type: EventType.global, parameters: params)
+            watchRtc?.log(logLevel: LogLevel.log, text: "testing")
+        } catch {
+            debugPrint(error)
+        }
     }
 }
 extension WebRTCClient {
@@ -326,3 +387,5 @@ extension WebRTCClient: RTCDataChannelDelegate {
         self.delegate?.webRTCClient(self, didReceiveData: buffer.data)
     }
 }
+
+

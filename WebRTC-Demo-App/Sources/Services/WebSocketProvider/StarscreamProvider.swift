@@ -15,7 +15,9 @@ class StarscreamWebSocket: WebSocketProvider {
     private let socket: WebSocket
     
     init(url: URL) {
-        self.socket = WebSocket(url: url)
+        let request = URLRequest(url: url)
+        self.socket = WebSocket(request: request)
+//        self.socket = WebSocket(url: url)
         self.socket.delegate = self
     }
     
@@ -29,6 +31,10 @@ class StarscreamWebSocket: WebSocketProvider {
 }
 
 extension StarscreamWebSocket: Starscream.WebSocketDelegate {
+    func didReceive(event: WebSocketEvent, client: WebSocketClient) {
+        debugPrint("did receive...")
+    }
+    
     func websocketDidConnect(socket: WebSocketClient) {
         self.delegate?.webSocketDidConnect(self)
     }
