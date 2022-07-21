@@ -10,7 +10,6 @@
 		2F7EBC3622DCC6430015B46E /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EBC3522DCC6430015B46E /* WebSocketProvider.swift */; };
 		2F7EBC3822DCCB4E0015B46E /* StarscreamProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EBC3722DCCB4E0015B46E /* StarscreamProvider.swift */; };
 		2F7EBC3A22DCCE240015B46E /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EBC3922DCCE240015B46E /* NativeWebSocket.swift */; };
-		4A1FE990287438170073A458 /* WatchRTC-iOS-SDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4A1FE98F287438170073A458 /* WatchRTC-iOS-SDK */; };
 		4AABC945283F4C6B00E9CD3B /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 4AABC944283F4C6B00E9CD3B /* Starscream */; };
 		4AABC947283F4C6E00E9CD3B /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 4AABC946283F4C6E00E9CD3B /* WebRTC */; };
 		79177C9720B0DE7A00BCD399 /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79177C9620B0DE7A00BCD399 /* WebRTCClient.swift */; };
@@ -27,14 +26,13 @@
 		795A4A2A221E0FB100F8BB03 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A4A29221E0FB100F8BB03 /* Message.swift */; };
 		798FBA472200F681009F525E /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798FBA462200F681009F525E /* MainViewController.xib */; };
 		798FBA492200F9A9009F525E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 798FBA482200F9A9009F525E /* LaunchScreen.storyboard */; };
+		A88880A42889F36B003AF40A /* WatchRTC-SDK-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = A88880A32889F36B003AF40A /* WatchRTC-SDK-iOS */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2F7EBC3522DCC6430015B46E /* WebSocketProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
 		2F7EBC3722DCCB4E0015B46E /* StarscreamProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarscreamProvider.swift; sourceTree = "<group>"; };
 		2F7EBC3922DCCE240015B46E /* NativeWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
-		4A1FE98D287434CC0073A458 /* WatchRTC-iOS-SDK2 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "WatchRTC-iOS-SDK2"; path = "../../WatchRTC-iOS-SDK2"; sourceTree = "<group>"; };
-		4A1FE98E287437E40073A458 /* WatchRTC-iOS-SDK2 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "WatchRTC-iOS-SDK2"; path = "../../WatchRTC-iOS-SDK2"; sourceTree = "<group>"; };
 		4AA5FDDF283E521A009AA4C7 /* WebRTC-Demo.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = "WebRTC-Demo.xcworkspace"; sourceTree = "<group>"; };
 		4AA5FDE1283E521A009AA4C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4AA5FDE2283E521A009AA4C7 /* WebRTC-Demo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "WebRTC-Demo.xcodeproj"; sourceTree = "<group>"; };
@@ -79,7 +77,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AABC947283F4C6E00E9CD3B /* WebRTC in Frameworks */,
-				4A1FE990287438170073A458 /* WatchRTC-iOS-SDK in Frameworks */,
+				A88880A42889F36B003AF40A /* WatchRTC-SDK-iOS in Frameworks */,
 				4AABC945283F4C6B00E9CD3B /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,15 +93,6 @@
 				2F7EBC3922DCCE240015B46E /* NativeWebSocket.swift */,
 			);
 			path = WebSocketProvider;
-			sourceTree = "<group>";
-		};
-		4AA5FDDB283E5035009AA4C7 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				4A1FE98D287434CC0073A458 /* WatchRTC-iOS-SDK2 */,
-				4A1FE98E287437E40073A458 /* WatchRTC-iOS-SDK2 */,
-			);
-			name = Packages;
 			sourceTree = "<group>";
 		};
 		4AA5FDDD283E521A009AA4C7 /* Frameworks */ = {
@@ -266,7 +255,6 @@
 		79262EDA20B0D6F500D576C1 = {
 			isa = PBXGroup;
 			children = (
-				4AA5FDDB283E5035009AA4C7 /* Packages */,
 				798FBA422200F3B1009F525E /* Sources */,
 				79177C9B20B0E84600BCD399 /* Resources */,
 				79177C9A20B0E82B00BCD399 /* SupportingFiles */,
@@ -334,7 +322,7 @@
 			packageProductDependencies = (
 				4AABC944283F4C6B00E9CD3B /* Starscream */,
 				4AABC946283F4C6E00E9CD3B /* WebRTC */,
-				4A1FE98F287438170073A458 /* WatchRTC-iOS-SDK */,
+				A88880A32889F36B003AF40A /* WatchRTC-SDK-iOS */,
 			);
 			productName = WebRTC;
 			productReference = 79262EE320B0D6F600D576C1 /* WebRTC-Demo.app */;
@@ -368,6 +356,7 @@
 			packageReferences = (
 				2F8A9D1D24FA64E700CAECD1 /* XCRemoteSwiftPackageReference "Starscream" */,
 				2F0D643B26FC644100CB9A47 /* XCRemoteSwiftPackageReference "WebRTC" */,
+				A88880A22889F36B003AF40A /* XCRemoteSwiftPackageReference "watchRTCSDK-iOS" */,
 			);
 			productRefGroup = 79262EE420B0D6F600D576C1 /* Products */;
 			projectDirPath = "";
@@ -548,14 +537,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 72Z73DFCD9;
+				DEVELOPMENT_TEAM = SH4EQNN223;
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stasel.WebRTC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stasel.WebRTC1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -570,14 +559,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 72Z73DFCD9;
+				DEVELOPMENT_TEAM = SH4EQNN223;
 				INFOPLIST_FILE = "$(SRCROOT)/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stasel.WebRTC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stasel.WebRTC1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -621,17 +610,22 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream.git";
 			requirement = {
-				kind = upToNextMajorVersion;
+				kind = versionRange;
+				maximumVersion = 5.0.0;
 				minimumVersion = 3.1.1;
+			};
+		};
+		A88880A22889F36B003AF40A /* XCRemoteSwiftPackageReference "watchRTCSDK-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/testRTC/watchRTCSDK-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4A1FE98F287438170073A458 /* WatchRTC-iOS-SDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "WatchRTC-iOS-SDK";
-		};
 		4AABC944283F4C6B00E9CD3B /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2F8A9D1D24FA64E700CAECD1 /* XCRemoteSwiftPackageReference "Starscream" */;
@@ -641,6 +635,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2F0D643B26FC644100CB9A47 /* XCRemoteSwiftPackageReference "WebRTC" */;
 			productName = WebRTC;
+		};
+		A88880A32889F36B003AF40A /* WatchRTC-SDK-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A88880A22889F36B003AF40A /* XCRemoteSwiftPackageReference "watchRTCSDK-iOS" */;
+			productName = "WatchRTC-SDK-iOS";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

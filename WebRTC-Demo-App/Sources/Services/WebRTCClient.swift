@@ -8,7 +8,7 @@
 
 import Foundation
 import WebRTC
-import WatchRTC_iOS_SDK
+import WatchRTC_SDK_iOS
 import SwiftyJSON
 
 protocol WebRTCClientDelegate: AnyObject {
