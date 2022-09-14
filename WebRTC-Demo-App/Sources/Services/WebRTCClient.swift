@@ -84,14 +84,15 @@ final class WebRTCClient: NSObject, RtcDataProvider {
         
         super.init()
          
-         let con: WatchRTCConfig = WatchRTCConfig(rtcApiKey: "staging:6d3873f0-f06e-4aea-9a25-1a959ab988cc", rtcRoomId: "noa_test135", keys: ["company":["moveo"]])
+         let con: WatchRTCConfig = WatchRTCConfig(rtcApiKey: "staging:6d3873f0-f06e-4aea-9a25-1a959ab988cc", rtcRoomId: "YOUR_ROOM_ID", keys: ["company":["YOUR_COMPANY_NAME"]])
          self.watchRtc = WatchRTC(dataProvider: self)
          guard let watchRtc = self.watchRtc else {
              debugPrint("error with watchRtc initialization")
              return
          }
          watchRtc.setConfig(config: con)
-
+         watchRtc.setLogger(debugLogger: self)
+         
         self.createMediaSenders()
         self.configureAudioSession()
         self.peerConnection.delegate = self
@@ -295,7 +296,7 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
         do
         {
             try watchRtc?.connect()
-            watchRtc?.setUserRating(rating: 1, ratingComment: "Noas rating")
+            watchRtc?.setUserRating(rating: 4, ratingComment: "CUSTOM RATING SETTING")
             let params: [String: String] = [
                 "test": "data"
             ]
@@ -389,3 +390,16 @@ extension WebRTCClient: RTCDataChannelDelegate {
 }
 
 
+extension WebRTCClient: DebugLoggerProtocol {
+    func debug(_ message: String) {
+        print("WatchRTC DEBUG: \(message)")
+    }
+    
+    func info(_ message: String) {
+        print("WatchRTC INFO: \(message)")
+    }
+    
+    func error(_ message: String) {
+        print("WatchRTC ERROR: \(message)")
+    }
+}
