@@ -1,0 +1,24 @@
+PODS:
+  - Starscream (4.0.4)
+  - SwiftyJSON (5.0.1)
+  - WatchRTC_SDK (1.2.0):
+    - Starscream
+    - SwiftyJSON
+
+DEPENDENCIES:
+  - WatchRTC_SDK
+
+SPEC REPOS:
+  trunk:
+    - Starscream
+    - SwiftyJSON
+    - WatchRTC_SDK
+
+SPEC CHECKSUMS:
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  WatchRTC_SDK: f19f0dab80cdb0142c0f127a5c40121cc31cf7ea
+
+PODFILE CHECKSUM: e927b385f3c15f150be2ada0f93e614227f86056
+
+COCOAPODS: 1.11.3
