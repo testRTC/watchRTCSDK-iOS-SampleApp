@@ -9,7 +9,6 @@
 import Foundation
 import WebRTC
 import WatchRTC_SDK
-import SwiftyJSON
 
 protocol WebRTCClientDelegate: AnyObject {
     func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate)

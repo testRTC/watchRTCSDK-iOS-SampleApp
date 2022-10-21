@@ -26,7 +26,6 @@
 		795A4A2A221E0FB100F8BB03 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A4A29221E0FB100F8BB03 /* Message.swift */; };
 		798FBA472200F681009F525E /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798FBA462200F681009F525E /* MainViewController.xib */; };
 		798FBA492200F9A9009F525E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 798FBA482200F9A9009F525E /* LaunchScreen.storyboard */; };
-		A8F004C32901E73F00FAA8E9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = A8F004C22901E73F00FAA8E9 /* SwiftyJSON */; };
 		A8F004CB2902F01600FAA8E9 /* WatchRTC_SDK in Frameworks */ = {isa = PBXBuildFile; productRef = A8F004CA2902F01600FAA8E9 /* WatchRTC_SDK */; };
 /* End PBXBuildFile section */
 
@@ -79,7 +78,6 @@
 			files = (
 				A8F004CB2902F01600FAA8E9 /* WatchRTC_SDK in Frameworks */,
 				4AABC947283F4C6E00E9CD3B /* WebRTC in Frameworks */,
-				A8F004C32901E73F00FAA8E9 /* SwiftyJSON in Frameworks */,
 				4AABC945283F4C6B00E9CD3B /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,7 +322,6 @@
 			packageProductDependencies = (
 				4AABC944283F4C6B00E9CD3B /* Starscream */,
 				4AABC946283F4C6E00E9CD3B /* WebRTC */,
-				A8F004C22901E73F00FAA8E9 /* SwiftyJSON */,
 				A8F004CA2902F01600FAA8E9 /* WatchRTC_SDK */,
 			);
 			productName = WebRTC;
@@ -359,7 +356,6 @@
 			packageReferences = (
 				2F8A9D1D24FA64E700CAECD1 /* XCRemoteSwiftPackageReference "Starscream" */,
 				2F0D643B26FC644100CB9A47 /* XCRemoteSwiftPackageReference "WebRTC" */,
-				A8F004C12901E73F00FAA8E9 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				A8F004C92902F01600FAA8E9 /* XCRemoteSwiftPackageReference "watchRTCSDK-iOS" */,
 			);
 			productRefGroup = 79262EE420B0D6F600D576C1 /* Products */;
@@ -623,14 +619,6 @@
 				minimumVersion = 3.1.1;
 			};
 		};
-		A8F004C12901E73F00FAA8E9 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 		A8F004C92902F01600FAA8E9 /* XCRemoteSwiftPackageReference "watchRTCSDK-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/testRTC/watchRTCSDK-iOS";
@@ -651,11 +639,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2F0D643B26FC644100CB9A47 /* XCRemoteSwiftPackageReference "WebRTC" */;
 			productName = WebRTC;
-		};
-		A8F004C22901E73F00FAA8E9 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A8F004C12901E73F00FAA8E9 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
 		};
 		A8F004CA2902F01600FAA8E9 /* WatchRTC_SDK */ = {
 			isa = XCSwiftPackageProductDependency;
