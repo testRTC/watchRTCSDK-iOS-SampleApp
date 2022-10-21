@@ -27,7 +27,6 @@
 		795A4A2A221E0FB100F8BB03 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A4A29221E0FB100F8BB03 /* Message.swift */; };
 		798FBA472200F681009F525E /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798FBA462200F681009F525E /* MainViewController.xib */; };
 		798FBA492200F9A9009F525E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 798FBA482200F9A9009F525E /* LaunchScreen.storyboard */; };
-		A802926B29032A5A00B2385F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = A802926A29032A5A00B2385F /* SwiftyJSON */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,7 +81,6 @@
 			files = (
 				4AABC947283F4C6E00E9CD3B /* WebRTC in Frameworks */,
 				4AABC945283F4C6B00E9CD3B /* Starscream in Frameworks */,
-				A802926B29032A5A00B2385F /* SwiftyJSON in Frameworks */,
 				1E86EAAB89C7AE7EDA63EFF0 /* Pods_WebRTC_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,7 +340,6 @@
 			packageProductDependencies = (
 				4AABC944283F4C6B00E9CD3B /* Starscream */,
 				4AABC946283F4C6E00E9CD3B /* WebRTC */,
-				A802926A29032A5A00B2385F /* SwiftyJSON */,
 			);
 			productName = WebRTC;
 			productReference = 79262EE320B0D6F600D576C1 /* WebRTC-Demo.app */;
@@ -376,7 +373,6 @@
 			packageReferences = (
 				2F8A9D1D24FA64E700CAECD1 /* XCRemoteSwiftPackageReference "Starscream" */,
 				2F0D643B26FC644100CB9A47 /* XCRemoteSwiftPackageReference "WebRTC" */,
-				A802926929032A5A00B2385F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = 79262EE420B0D6F600D576C1 /* Products */;
 			projectDirPath = "";
@@ -681,14 +677,6 @@
 				minimumVersion = 3.1.1;
 			};
 		};
-		A802926929032A5A00B2385F /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -701,11 +689,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2F0D643B26FC644100CB9A47 /* XCRemoteSwiftPackageReference "WebRTC" */;
 			productName = WebRTC;
-		};
-		A802926A29032A5A00B2385F /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A802926929032A5A00B2385F /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
