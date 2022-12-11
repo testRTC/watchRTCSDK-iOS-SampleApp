@@ -83,7 +83,12 @@ final class WebRTCClient: NSObject, RtcDataProvider {
         
         super.init()
          
-         let con: WatchRTCConfig = WatchRTCConfig(rtcApiKey: "staging:6d3873f0-f06e-4aea-9a25-1a959ab988cc", rtcRoomId: "YOUR_ROOM_ID", keys: ["company":["YOUR_COMPANY_NAME"]])
+         let con: WatchRTCConfig = WatchRTCConfig(
+            rtcApiKey: "staging:6d3873f0-f06e-4aea-9a25-1a959ab988cc",
+            rtcRoomId: "YOUR_ROOM_ID",
+            rtcPeerId: "YOUR_PEER_ID",
+            keys: ["company":["YOUR_COMPANY_NAME"]])
+
          self.watchRtc = WatchRTC(dataProvider: self)
          guard let watchRtc = self.watchRtc else {
              debugPrint("error with watchRtc initialization")
