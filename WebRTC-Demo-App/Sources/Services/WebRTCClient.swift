@@ -22,7 +22,9 @@ final class WebRTCClient: NSObject, RtcDataProvider {
             var dict = [String: RTCStat]()
             
             for (key,value) in stats.statistics {
-                let rtcStat = RTCStat(timestamp: Int64(value.timestamp_us), properties: value.values)
+                var values = value.values
+                values["type"] = value.type as NSString
+                let rtcStat = RTCStat(timestamp: Int64(value.timestamp_us), properties: values)
                 dict[key] = rtcStat
             }
             
