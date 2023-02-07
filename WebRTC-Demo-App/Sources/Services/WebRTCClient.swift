@@ -306,7 +306,7 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
             let params: [String: String] = [
                 "test": "data"
             ]
-            watchRtc?.addEvent(name: "custom_test_event", type: EventType.global, parameters: params)
+            watchRtc?.addEvent(name: "test_event", type: EventType.global, parameters: params)
             watchRtc?.log(logLevel: LogLevel.log, text: "testing")
         } catch {
             debugPrint(error)
