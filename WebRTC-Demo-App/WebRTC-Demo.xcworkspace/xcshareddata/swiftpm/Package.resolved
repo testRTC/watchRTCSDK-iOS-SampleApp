@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/testRTC/watchRTCSDK-iOS",
       "state" : {
-        "revision" : "b36d74cb241ad6b42a33a39d0e3631e2341ebdf5",
-        "version" : "1.5.0"
+        "revision" : "dd2492d84f7ebb6cd2e21a479a3886526d675196",
+        "version" : "1.5.1"
       }
     },
     {
