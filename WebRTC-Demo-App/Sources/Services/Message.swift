@@ -26,7 +26,7 @@ extension Message: Codable {
             throw DecodeError.unknownType
         }
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
@@ -38,11 +38,11 @@ extension Message: Codable {
             try container.encode(String(describing: IceCandidate.self), forKey: .type)
         }
     }
-    
+
     enum DecodeError: Error {
         case unknownType
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case type, payload
     }

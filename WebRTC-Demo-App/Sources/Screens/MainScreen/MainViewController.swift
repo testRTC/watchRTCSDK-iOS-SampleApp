@@ -15,7 +15,7 @@ class MainViewController: UIViewController {
     private let signalClient: SignalingClient
     private let webRTCClient: WebRTCClient
     private lazy var videoViewController = VideoViewController(webRTCClient: self.webRTCClient)
-    
+
     @IBOutlet private weak var speakerButton: UIButton?
     @IBOutlet private weak var signalingStatusLabel: UILabel?
     @IBOutlet private weak var localSdpStatusLabel: UILabel?
@@ -24,22 +24,21 @@ class MainViewController: UIViewController {
     @IBOutlet private weak var remoteCandidatesLabel: UILabel?
     @IBOutlet private weak var muteButton: UIButton?
     @IBOutlet private weak var webRTCStatusLabel: UILabel?
-    
+
     private var signalingConnected: Bool = false {
         didSet {
             DispatchQueue.main.async {
                 if self.signalingConnected {
                     self.signalingStatusLabel?.text = "Connected"
                     self.signalingStatusLabel?.textColor = UIColor.green
-                }
-                else {
+                } else {
                     self.signalingStatusLabel?.text = "Not connected"
                     self.signalingStatusLabel?.textColor = UIColor.red
                 }
             }
         }
     }
-    
+
     private var hasLocalSdp: Bool = false {
         didSet {
             DispatchQueue.main.async {
@@ -47,7 +46,7 @@ class MainViewController: UIViewController {
             }
         }
     }
-    
+
     private var localCandidateCount: Int = 0 {
         didSet {
             DispatchQueue.main.async {
@@ -55,7 +54,7 @@ class MainViewController: UIViewController {
             }
         }
     }
-    
+
     private var hasRemoteSdp: Bool = false {
         didSet {
             DispatchQueue.main.async {
@@ -63,7 +62,7 @@ class MainViewController: UIViewController {
             }
         }
     }
-    
+
     private var remoteCandidateCount: Int = 0 {
         didSet {
             DispatchQueue.main.async {
@@ -71,32 +70,32 @@ class MainViewController: UIViewController {
             }
         }
     }
-    
+
     private var speakerOn: Bool = false {
         didSet {
             let title = "Speaker: \(self.speakerOn ? "On" : "Off" )"
             self.speakerButton?.setTitle(title, for: .normal)
         }
     }
-    
+
     private var mute: Bool = false {
         didSet {
             let title = "Mute: \(self.mute ? "on" : "off")"
             self.muteButton?.setTitle(title, for: .normal)
         }
     }
-    
+
     init(signalClient: SignalingClient, webRTCClient: WebRTCClient) {
         self.signalClient = signalClient
         self.webRTCClient = webRTCClient
         super.init(nibName: String(describing: MainViewController.self), bundle: Bundle.main)
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "WebRTC Demo"
@@ -107,50 +106,48 @@ class MainViewController: UIViewController {
         self.remoteCandidateCount = 0
         self.speakerOn = false
         self.webRTCStatusLabel?.text = "New"
-        
+
         self.webRTCClient.delegate = self
         self.signalClient.delegate = self
         self.signalClient.connect()
     }
-    
+
     @IBAction private func offerDidTap(_ sender: UIButton) {
         self.webRTCClient.offer { (sdp) in
             self.hasLocalSdp = true
             self.signalClient.send(sdp: sdp)
         }
     }
-    
+
     @IBAction private func answerDidTap(_ sender: UIButton) {
         self.webRTCClient.answer { (localSdp) in
             self.hasLocalSdp = true
             self.signalClient.send(sdp: localSdp)
         }
     }
-    
+
     @IBAction private func speakerDidTap(_ sender: UIButton) {
         if self.speakerOn {
             self.webRTCClient.speakerOff()
-        }
-        else {
+        } else {
             self.webRTCClient.speakerOn()
         }
         self.speakerOn = !self.speakerOn
     }
-    
+
     @IBAction private func videoDidTap(_ sender: UIButton) {
         self.present(videoViewController, animated: true, completion: nil)
     }
-    
+
     @IBAction private func muteDidTap(_ sender: UIButton) {
         self.mute = !self.mute
         if self.mute {
             self.webRTCClient.muteAudio()
-        }
-        else {
+        } else {
             self.webRTCClient.unmuteAudio()
         }
     }
-    
+
     @IBAction func sendDataDidTap(_ sender: UIButton) {
         let alert = UIAlertController(title: "Send a message to the other peer",
                                       message: "This will be transferred over WebRTC data channel",
@@ -173,20 +170,20 @@ extension MainViewController: SignalClientDelegate {
     func signalClientDidConnect(_ signalClient: SignalingClient) {
         self.signalingConnected = true
     }
-    
+
     func signalClientDidDisconnect(_ signalClient: SignalingClient) {
         self.signalingConnected = false
     }
-    
+
     func signalClient(_ signalClient: SignalingClient, didReceiveRemoteSdp sdp: RTCSessionDescription) {
         print("Received remote sdp")
-        self.webRTCClient.set(remoteSdp: sdp) { (error) in
+        self.webRTCClient.set(remoteSdp: sdp) { (_) in
             self.hasRemoteSdp = true
         }
     }
-    
+
     func signalClient(_ signalClient: SignalingClient, didReceiveCandidate candidate: RTCIceCandidate) {
-        self.webRTCClient.set(remoteCandidate: candidate) { error in
+        self.webRTCClient.set(remoteCandidate: candidate) { _ in
             print("Received remote candidate")
             self.remoteCandidateCount += 1
         }
@@ -194,13 +191,13 @@ extension MainViewController: SignalClientDelegate {
 }
 
 extension MainViewController: WebRTCClientDelegate {
-    
+
     func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate) {
         print("discovered local candidate")
         self.localCandidateCount += 1
         self.signalClient.send(candidate: candidate)
     }
-    
+
     func webRTCClient(_ client: WebRTCClient, didChangeConnectionState state: RTCIceConnectionState) {
         let textColor: UIColor
         switch state {
@@ -220,7 +217,7 @@ extension MainViewController: WebRTCClientDelegate {
             self.webRTCStatusLabel?.textColor = textColor
         }
     }
-    
+
     func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data) {
         DispatchQueue.main.async {
             let message = String(data: data, encoding: .utf8) ?? "(Binary: \(data.count) bytes)"
@@ -230,4 +227,3 @@ extension MainViewController: WebRTCClientDelegate {
         }
     }
 }
-
