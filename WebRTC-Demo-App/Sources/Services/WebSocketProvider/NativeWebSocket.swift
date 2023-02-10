@@ -10,7 +10,7 @@ import Foundation
 
 @available(iOS 13.0, *)
 class NativeWebSocket: NSObject, WebSocketProvider {
-    
+
     var delegate: WebSocketProviderDelegate?
     private let url: URL
     private var socket: URLSessionWebSocketTask?
@@ -31,16 +31,16 @@ class NativeWebSocket: NSObject, WebSocketProvider {
     func send(data: Data) {
         self.socket?.send(.data(data)) { _ in }
     }
-    
+
     private func readMessage() {
         self.socket?.receive { [weak self] message in
             guard let self = self else { return }
-            
+
             switch message {
             case .success(.data(let data)):
                 self.delegate?.webSocket(self, didReceiveData: data)
                 self.readMessage()
-                
+
             case .success:
                 debugPrint("Warning: Expected to receive data format but received a string. Check the websocket server config.")
                 self.readMessage()
@@ -50,7 +50,7 @@ class NativeWebSocket: NSObject, WebSocketProvider {
             }
         }
     }
-    
+
     private func disconnect() {
         self.socket?.cancel()
         self.socket = nil
@@ -59,11 +59,11 @@ class NativeWebSocket: NSObject, WebSocketProvider {
 }
 
 @available(iOS 13.0, *)
-extension NativeWebSocket: URLSessionWebSocketDelegate, URLSessionDelegate  {
+extension NativeWebSocket: URLSessionWebSocketDelegate, URLSessionDelegate {
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         self.delegate?.webSocketDidConnect(self)
     }
-    
+
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         self.disconnect()
     }
