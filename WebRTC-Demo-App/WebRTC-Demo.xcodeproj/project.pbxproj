@@ -27,6 +27,7 @@
 		798FBA472200F681009F525E /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798FBA462200F681009F525E /* MainViewController.xib */; };
 		798FBA492200F9A9009F525E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 798FBA482200F9A9009F525E /* LaunchScreen.storyboard */; };
 		A80092172996E1FD00A97A87 /* WatchRTC_SDK in Frameworks */ = {isa = PBXBuildFile; productRef = A80092162996E1FD00A97A87 /* WatchRTC_SDK */; };
+		A84E49BB29E5F40E00590B4A /* Ably in Frameworks */ = {isa = PBXBuildFile; productRef = A84E49BA29E5F40E00590B4A /* Ably */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A84E49BB29E5F40E00590B4A /* Ably in Frameworks */,
 				A80092172996E1FD00A97A87 /* WatchRTC_SDK in Frameworks */,
 				4AABC947283F4C6E00E9CD3B /* WebRTC in Frameworks */,
 				4AABC945283F4C6B00E9CD3B /* Starscream in Frameworks */,
@@ -323,6 +325,7 @@
 				4AABC944283F4C6B00E9CD3B /* Starscream */,
 				4AABC946283F4C6E00E9CD3B /* WebRTC */,
 				A80092162996E1FD00A97A87 /* WatchRTC_SDK */,
+				A84E49BA29E5F40E00590B4A /* Ably */,
 			);
 			productName = WebRTC;
 			productReference = 79262EE320B0D6F600D576C1 /* WebRTC-Demo.app */;
@@ -357,6 +360,7 @@
 				2F8A9D1D24FA64E700CAECD1 /* XCRemoteSwiftPackageReference "Starscream" */,
 				2F0D643B26FC644100CB9A47 /* XCRemoteSwiftPackageReference "WebRTC" */,
 				A80092152996E1FD00A97A87 /* XCRemoteSwiftPackageReference "watchRTCSDK-iOS" */,
+				A84E49B929E5F40E00590B4A /* XCRemoteSwiftPackageReference "ably-cocoa" */,
 			);
 			productRefGroup = 79262EE420B0D6F600D576C1 /* Products */;
 			projectDirPath = "";
@@ -627,6 +631,14 @@
 				minimumVersion = 1.5.1;
 			};
 		};
+		A84E49B929E5F40E00590B4A /* XCRemoteSwiftPackageReference "ably-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ably/ably-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -644,6 +656,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A80092152996E1FD00A97A87 /* XCRemoteSwiftPackageReference "watchRTCSDK-iOS" */;
 			productName = WatchRTC_SDK;
+		};
+		A84E49BA29E5F40E00590B4A /* Ably */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A84E49B929E5F40E00590B4A /* XCRemoteSwiftPackageReference "ably-cocoa" */;
+			productName = Ably;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
