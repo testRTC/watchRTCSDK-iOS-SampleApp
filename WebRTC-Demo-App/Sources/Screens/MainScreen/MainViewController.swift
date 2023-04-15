@@ -12,12 +12,17 @@ import WebRTC
 
 class MainViewController: UIViewController {
 
-    private let signalClient: SignalingClient
+    private let signalClient: SignallingClientProtocol
     private let webRTCClient: WebRTCClient
     private lazy var videoViewController = VideoViewController(webRTCClient: self.webRTCClient)
 
+    private let roomName = "TestRoom"
+    
     @IBOutlet private weak var speakerButton: UIButton?
     @IBOutlet private weak var signalingStatusLabel: UILabel?
+    
+    @IBOutlet private weak var roomNameStackView: UIStackView!
+    @IBOutlet private weak var roomNameField: UITextField!
     @IBOutlet private weak var localSdpStatusLabel: UILabel?
     @IBOutlet private weak var localCandidatesLabel: UILabel?
     @IBOutlet private weak var remoteSdpStatusLabel: UILabel?
@@ -85,7 +90,7 @@ class MainViewController: UIViewController {
         }
     }
 
-    init(signalClient: SignalingClient, webRTCClient: WebRTCClient) {
+    init(signalClient: SignallingClientProtocol, webRTCClient: WebRTCClient) {
         self.signalClient = signalClient
         self.webRTCClient = webRTCClient
         super.init(nibName: String(describing: MainViewController.self), bundle: Bundle.main)
@@ -98,8 +103,16 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = "WebRTC Demo"
         self.signalingConnected = false
+        if signalClient is AblySignallingClient {
+            self.roomNameField.text = roomName
+            self.roomNameField.delegate = self
+            self.roomNameStackView.isHidden = false
+        } else if signalClient is SocketSignalingClient {
+            self.roomNameStackView.isHidden = true
+        }
         self.hasLocalSdp = false
         self.hasRemoteSdp = false
         self.localCandidateCount = 0
@@ -108,8 +121,8 @@ class MainViewController: UIViewController {
         self.webRTCStatusLabel?.text = "New"
 
         self.webRTCClient.delegate = self
-        self.signalClient.delegate = self
-        self.signalClient.connect()
+        self.signalClient.setDelegate(self)
+        self.signalClient.connect(self.roomNameField.text ?? self.roomName)
     }
 
     @IBAction private func offerDidTap(_ sender: UIButton) {
@@ -167,26 +180,37 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: SignalClientDelegate {
-    func signalClientDidConnect(_ signalClient: SignalingClient) {
+    func signalClientDidConnect(_ signalClient: SignallingClientProtocol) {
         self.signalingConnected = true
     }
 
-    func signalClientDidDisconnect(_ signalClient: SignalingClient) {
+    func signalClientDidDisconnect(_ signalClient: SignallingClientProtocol) {
         self.signalingConnected = false
     }
 
-    func signalClient(_ signalClient: SignalingClient, didReceiveRemoteSdp sdp: RTCSessionDescription) {
+    func signalClient(_ signalClient: SignallingClientProtocol, didReceiveRemoteSdp sdp: RTCSessionDescription) {
         print("Received remote sdp")
         self.webRTCClient.set(remoteSdp: sdp) { (_) in
             self.hasRemoteSdp = true
         }
     }
 
-    func signalClient(_ signalClient: SignalingClient, didReceiveCandidate candidate: RTCIceCandidate) {
+    func signalClient(_ signalClient: SignallingClientProtocol, didReceiveCandidate candidate: RTCIceCandidate) {
         self.webRTCClient.set(remoteCandidate: candidate) { _ in
             print("Received remote candidate")
             self.remoteCandidateCount += 1
         }
+    }
+}
+
+extension MainViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.signalClient.disconnect()
+        self.signalClient.connect(textField.text ?? self.roomName)
+        
+        textField.resignFirstResponder()
+        
+        return true
     }
 }
 
