@@ -1,4 +1,4 @@
-# Sample WebRTC iOS app with integrated WatchRTC SDK.
+# Sample WebRTC iOS app with integrated WatchRTC SDK
 A simple native WebRTC demo iOS app using swift. 
 
 WatchRTC is integrated into the app through Swift Package Manager.
