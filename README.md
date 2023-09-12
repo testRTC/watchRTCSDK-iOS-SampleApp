@@ -7,7 +7,7 @@ For sample app with WatchRTC integrated through Cocoapods, see: [https://github.
 
 This app use [Ably signalling](https://ably.com/) by default, so disregard information about signalling server setup from [Setup instructions](https://github.com/testRTC/watchRTCSDK-iOS-SampleApp#setup-instructions), [Starting NodeJS signaling server](https://github.com/testRTC/watchRTCSDK-iOS-SampleApp#starting-nodejs-signaling-server) and [Starting Swift signaling server](https://github.com/testRTC/watchRTCSDK-iOS-SampleApp#starting-swift-signaling-server) sections. However, local signalling server can still be used. In order to use it, call **buildSocketSignalingClient()** method in **AppDelegate.swift** file.
 
-All of the `WatchRTC` related code is located in [WebRTCClient.swift](WebRTC-Demo-App/Sources/Services/WebRTCClient.swift)
+All of the `WatchRTC` related code is located in [WebRTCClient.swift](WebRTC-Demo-App/Sources/Services/WebRTCClient.swift) file
 
 ![Screenshots](images/WebRTC.png)
 
